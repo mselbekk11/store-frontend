@@ -3,6 +3,7 @@ import { listCollections } from "@lib/data/collections"
 import { Text, clx } from "@medusajs/ui"
 
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
+import { TextScrambleBasicOne } from "@modules/components/TextScramble"
 import MedusaCTA from "@modules/layout/components/medusa-cta"
 
 export default async function Footer() {
@@ -20,7 +21,7 @@ export default async function Footer() {
               href="/"
               className="txt-compact-xlarge-plus text-ui-fg-subtle hover:text-ui-fg-base uppercase"
             >
-              Medusa Store
+              <TextScrambleBasicOne text="LLM DEPT." />
             </LocalizedClientLink>
           </div>
           <div className="text-small-regular gap-10 md:gap-x-16 grid grid-cols-2 sm:grid-cols-3">
