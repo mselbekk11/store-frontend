@@ -11,7 +11,7 @@ export default function ProductCard({ product }: { product: any }) {
           alt={product.title}
           width={300}
           height={300}
-          className="w-full"
+          className="w-full border"
         />
         <div className="flex flex-col text-ui-fg-subtle mt-2 text-sm">
           <TextScrambleBasicTwo text={product.title} />
