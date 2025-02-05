@@ -4,7 +4,7 @@ import { FlickeringGridDemo } from "@modules/components/FlickeringHero"
 
 const Hero = () => {
   return (
-    <div className="h-[50vh] w-full border-b border-ui-border-base relative bg-ui-bg-subtle">
+    <div className="h-[50vh] w-full border-b border-ui-border-base relative bg-[#181818]">
       <FlickeringGridDemo />
       {/* <div className="absolute inset-0 z-10 flex flex-col justify-center items-center text-center small:p-32 gap-6">
         <span>
