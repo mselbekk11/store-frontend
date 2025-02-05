@@ -57,7 +57,7 @@ export default function Products() {
       {loading && <span>Loading...</span>}
       {!loading && products.length === 0 && <span>No products found.</span>}
       {!loading && products.length > 0 && (
-        <div className="grid grid-cols-4 gap-4 w-full max-w-7xl m-auto">
+        <div className="grid grid-cols-4 gap-4 w-full max-w-7xl m-auto h-full">
           {products.map((product) => (
             // <li key={product.id}>{product.title}</li>
             <ProductCard key={product.id} product={product} />

@@ -2,16 +2,18 @@ import Image from "next/image"
 
 export default function ProductCard({ product }: { product: any }) {
   return (
-    <div>
+    <div className="w-full h-full">
       <Image
         src={product.images[0].url}
         alt={product.title}
         width={300}
         height={300}
+        className="w-full"
       />
-      <h1>{product.title}</h1>
-      <p>{product.price}</p>
-      {/* <p>{product.variants[0].prices[0].amount}</p> */}
+      <div className="flex flex-col text-ui-fg-subtle mt-2 text-sm">
+        <h1>{product.title}</h1>
+        <p>$100.00</p>
+      </div>
     </div>
   )
 }
