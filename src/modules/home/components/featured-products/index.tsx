@@ -1,28 +1,5 @@
 "use client"
 
-// import { HttpTypes } from "@medusajs/types"
-// import ProductRail from "@modules/home/components/featured-products/product-rail"
-
-// export default async function FeaturedProducts({
-//   collections,
-//   region,
-// }: {
-//   collections: HttpTypes.StoreCollection[]
-//   region: HttpTypes.StoreRegion
-// }) {
-//   return collections.map((collection) => (
-//     <li key={collection.id}>
-//       <ProductRail collection={collection} region={region} />
-//     </li>
-//   ))
-// }
-
-// export default async function FeaturedProducts() {
-//   return (
-//     <div className="max-w-7xl w-full h-full bg-red-500 m-auto">this is a test</div>
-//   )
-// }
-
 import { useEffect, useState } from "react"
 import { HttpTypes } from "@medusajs/types"
 import ProductCard from "./product-card"
@@ -30,6 +7,7 @@ import ProductCard from "./product-card"
 export default function Products() {
   const [loading, setLoading] = useState(true)
   const [products, setProducts] = useState<HttpTypes.StoreProduct[]>([])
+  const [hoveredId, setHoveredId] = useState<string | null>(null)
 
   useEffect(() => {
     if (!loading) {
@@ -59,8 +37,16 @@ export default function Products() {
       {!loading && products.length > 0 && (
         <div className="grid grid-cols-5 gap-4 w-full max-w-8xl m-auto h-full">
           {products.map((product) => (
-            // <li key={product.id}>{product.title}</li>
-            <ProductCard key={product.id} product={product} />
+            <div
+              key={product.id}
+              onMouseEnter={() => setHoveredId(product.id)}
+              onMouseLeave={() => setHoveredId(null)}
+              className={`transition-all duration-300 ${
+                hoveredId && hoveredId !== product.id ? "blur-sm" : ""
+              }`}
+            >
+              <ProductCard product={product} />
+            </div>
           ))}
         </div>
       )}
