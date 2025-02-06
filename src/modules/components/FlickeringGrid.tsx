@@ -8,6 +8,8 @@ interface FlickeringGridProps extends React.HTMLAttributes<HTMLDivElement> {
   gridGap?: number
   flickerChance?: number
   color?: string
+  accentColor?: string
+  accentChance?: number
   width?: number
   height?: number
   className?: string
@@ -19,6 +21,8 @@ export const FlickeringGrid: React.FC<FlickeringGridProps> = ({
   gridGap = 6,
   flickerChance = 0.3,
   color = "rgb(0, 0, 0)",
+  accentColor = "#d4bf79",
+  accentChance = 0.02,
   width,
   height,
   className,
@@ -30,7 +34,7 @@ export const FlickeringGrid: React.FC<FlickeringGridProps> = ({
   const [isInView, setIsInView] = useState(false)
   const [canvasSize, setCanvasSize] = useState({ width: 0, height: 0 })
 
-  const memoizedColor = useMemo(() => {
+  const memoizedColors = useMemo(() => {
     const toRGBA = (color: string) => {
       if (typeof window === "undefined") {
         return `rgba(0, 0, 0,`
@@ -44,8 +48,11 @@ export const FlickeringGrid: React.FC<FlickeringGridProps> = ({
       const [r, g, b] = Array.from(ctx.getImageData(0, 0, 1, 1).data)
       return `rgba(${r}, ${g}, ${b},`
     }
-    return toRGBA(color)
-  }, [color])
+    return {
+      primary: toRGBA(color),
+      accent: toRGBA(accentColor),
+    }
+  }, [color, accentColor])
 
   const setupCanvas = useCallback(
     (canvas: HTMLCanvasElement, width: number, height: number) => {
@@ -72,10 +79,13 @@ export const FlickeringGrid: React.FC<FlickeringGridProps> = ({
       for (let i = 0; i < squares.length; i++) {
         if (Math.random() < flickerChance * deltaTime) {
           squares[i] = Math.random() * maxOpacity
+          if (Math.random() < accentChance) {
+            squares[i] = -squares[i]
+          }
         }
       }
     },
-    [flickerChance, maxOpacity]
+    [flickerChance, maxOpacity, accentChance]
   )
 
   const drawGrid = useCallback(
@@ -94,8 +104,11 @@ export const FlickeringGrid: React.FC<FlickeringGridProps> = ({
 
       for (let i = 0; i < cols; i++) {
         for (let j = 0; j < rows; j++) {
-          const opacity = squares[i * rows + j]
-          ctx.fillStyle = `${memoizedColor}${opacity})`
+          const value = squares[i * rows + j]
+          const opacity = Math.abs(value)
+          ctx.fillStyle = `${
+            value < 0 ? memoizedColors.accent : memoizedColors.primary
+          }${opacity})`
           ctx.fillRect(
             i * (squareSize + gridGap) * dpr,
             j * (squareSize + gridGap) * dpr,
@@ -105,7 +118,7 @@ export const FlickeringGrid: React.FC<FlickeringGridProps> = ({
         }
       }
     },
-    [memoizedColor, squareSize, gridGap]
+    [memoizedColors, squareSize, gridGap]
   )
 
   useEffect(() => {
