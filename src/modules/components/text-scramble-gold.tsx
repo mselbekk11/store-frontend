@@ -40,7 +40,7 @@ export function TextScrambleGold({
   const formatDisplayText = (text: string) => {
     return text.split("").map((char, index) =>
       char === "0" || char === "1" ? (
-        <span key={index} style={{ color: "#d4bf79" }}>
+        <span key={index} style={{ color: "#e8dbb0" }}>
           {char}
         </span>
       ) : (

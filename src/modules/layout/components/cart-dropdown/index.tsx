@@ -16,6 +16,7 @@ import LocalizedClientLink from "@modules/common/components/localized-client-lin
 import Thumbnail from "@modules/products/components/thumbnail"
 import { usePathname } from "next/navigation"
 import { Fragment, useEffect, useRef, useState } from "react"
+import { ShoppingBag } from "lucide-react"
 
 const CartDropdown = ({
   cart: cartState,
@@ -82,10 +83,15 @@ const CartDropdown = ({
       <Popover className="relative h-full">
         <PopoverButton className="h-full">
           <LocalizedClientLink
-            className="hover:text-ui-fg-base"
+            className="hover:text-ui-fg-base flex items-center gap-2"
             href="/cart"
             data-testid="nav-cart-link"
-          >{`Cart (${totalItems})`}</LocalizedClientLink>
+          >
+            <ShoppingBag size={20} />
+            {/* {`(${totalItems})`} */}
+
+            <Circle totalItems={totalItems} />
+          </LocalizedClientLink>
         </PopoverButton>
         <Transition
           show={cartDropdownOpen}
@@ -228,3 +234,11 @@ const CartDropdown = ({
 }
 
 export default CartDropdown
+
+export function Circle({ totalItems }: { totalItems: number }) {
+  return (
+    <div className="w-5 h-5 rounded-full bg-[#2e2e2e] flex items-center justify-center text-xs text-[#e8dbb0]">
+      <span>{totalItems}</span>
+    </div>
+  )
+}
