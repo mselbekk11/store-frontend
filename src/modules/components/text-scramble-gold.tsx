@@ -18,7 +18,7 @@ export type TextScrambleProps = {
 
 const newChars = "01"
 
-export function TextScramble({
+export function TextScrambleGold({
   children,
   duration = 0.8,
   speed = 0.04,
@@ -35,6 +35,19 @@ export function TextScramble({
   const [displayText, setDisplayText] = useState(children)
   const [isAnimating, setIsAnimating] = useState(false)
   const text = children
+
+  // Helper function to wrap 0 and 1 in colored spans
+  const formatDisplayText = (text: string) => {
+    return text.split("").map((char, index) =>
+      char === "0" || char === "1" ? (
+        <span key={index} style={{ color: "#d4bf79" }}>
+          {char}
+        </span>
+      ) : (
+        char
+      )
+    )
+  }
 
   const scramble = async () => {
     if (isAnimating) return
@@ -81,7 +94,7 @@ export function TextScramble({
 
   return (
     <MotionComponent className={className} {...props}>
-      {displayText}
+      {formatDisplayText(displayText)}
     </MotionComponent>
   )
 }

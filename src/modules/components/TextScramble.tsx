@@ -2,6 +2,7 @@
 
 import { TextScramble } from "./text-scramble"
 import { useEffect, useState } from "react"
+import { TextScrambleGold } from "./text-scramble-gold"
 
 export function TextScrambleBasicOne({ text }: { text: string }) {
   const [trigger, setTrigger] = useState(true)
@@ -17,11 +18,11 @@ export function TextScrambleBasicOne({ text }: { text: string }) {
   }, [])
 
   return (
-    <TextScramble
+    <TextScrambleGold
       trigger={trigger}
       className="font-mono uppercase text-ui-fg-subtle text-xl"
     >
       {text}
-    </TextScramble>
+    </TextScrambleGold>
   )
 }
